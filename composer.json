@@ -1,0 +1,31 @@
+{
+    "name": "beeksiwaais/webdriver-php",
+    "type": "symfony-bridge",
+    "description": "Webdriver PHP",
+    "keywords": ["selenium"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Beeksi Waais"
+        },
+        {
+            "name": "chibimagic",
+            "homepage": "http://chibimagic.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "BeeksiWaais\\WebDriver": ""
+        }
+    },
+    "target-dir": "BeeksiWaais/WebDriver",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
