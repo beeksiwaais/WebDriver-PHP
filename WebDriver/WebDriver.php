@@ -1,5 +1,7 @@
 <?php
 
+namespace BeeksiWaais\WebDriver;
+
 class WebDriver {
   public static $ImplicitWaitMS = 0;
   
@@ -68,7 +70,7 @@ class WebDriver {
     if (isset(self::$keys[$name])) {
       return json_decode('"' . self::$keys[$name] . '"');
     } else {
-      throw new Exception("Can't type key $name");
+      throw new \Exception("Can't type key $name");
     }
   }
 

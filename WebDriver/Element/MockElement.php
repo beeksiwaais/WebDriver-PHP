@@ -1,6 +1,8 @@
 <?php
 
-class WebDriver_MockElement extends WebDriver_WebElement {
+namespace BeeksiWaais\WebDriver\Element;
+
+class MockElement extends WebElement {
   public function assert_visible() { return true; }
   public function assert_hidden() { return true; }
   public function assert_enabled() { return true; }

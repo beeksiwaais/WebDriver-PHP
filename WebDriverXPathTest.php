@@ -1,6 +1,6 @@
 <?php
 
-require_once 'WebDriver.php';
+require_once 'WebDriver/WebDriver.php';
 
 class WebDriverXPathTest extends PHPUnit_Framework_TestCase {
   public function data() {

@@ -1,6 +1,10 @@
 <?php
 
-class WebDriver_MockDriver extends WebDriver_Driver {
+namespace BeeksiWaais\WebDriver\Driver;
+
+use BeeksiWaais\WebDriver\Element\MockElement;
+
+class MockDriver extends Driver {
   private $next_element_id;
   
   public function __construct() {
@@ -15,7 +19,7 @@ class WebDriver_MockDriver extends WebDriver_Driver {
     }
     $relative_url = str_replace(':sessionId', $this->session_id, $relative_url);
     $full_url = $this->server_url . $relative_url;
-    $response = WebDriver_MockDriver::MockCurl($http_type, $full_url, $payload);
+    $response = MockDriver::MockCurl($http_type, $full_url, $payload);
     return $response;
   }
 
@@ -35,7 +39,7 @@ class WebDriver_MockDriver extends WebDriver_Driver {
   public function get_element($locator) {
     $payload = WebDriver::ParseLocator($locator);
     $response = $this->execute("POST", "/session/:sessionId/element", $payload);
-    return new WebDriver_MockElement($this, $this->next_element_id++, $locator);
+    return new MockElement($this, $this->next_element_id++, $locator);
   }
   
   public function assert_url($expected_url) { return true; }

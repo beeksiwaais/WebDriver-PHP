@@ -1,6 +1,8 @@
 <?php
 
-class WebDriver_FirefoxProfile {
+namespace BeeksiWaais\WebDriver\Profile;
+
+class FirefoxProfile {
   protected $preferences = array();
   
   public function set_preference($key, $value) {

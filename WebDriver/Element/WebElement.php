@@ -1,6 +1,11 @@
 <?php
 
-class WebDriver_WebElement {
+namespace BeeksiWaais\WebDriver\Element;
+
+use BeeksiWaais\WebDriver\WebDriver;
+use BeeksiWaais\WebDriver\WebElement;
+
+class WebElement {
   protected $driver;
   protected $element_id;
   protected $locator;
@@ -72,7 +77,7 @@ class WebDriver_WebElement {
     $payload = WebDriver::ParseLocator($locator);
     $response = $this->execute("POST", "/element", $payload);
     $next_element_id = WebDriver::GetJSONValue($response, "ELEMENT");
-    return new WebDriver_WebElement($this->driver, $next_element_id, $locator);
+    return new WebElement($this->driver, $next_element_id, $locator);
   }
   
   // See http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/elements
@@ -82,7 +87,7 @@ class WebDriver_WebElement {
     $all_element_ids = WebDriver::GetJSONValue($response, "ELEMENT");
     $all_elements = array();
     foreach ($all_element_ids as $element_id) {
-      $all_elements[] = new WebDriver_WebElement($this->driver, $element_id, $locator);
+      $all_elements[] = new WebElement($this->driver, $element_id, $locator);
     }
     return $all_elements;
   }
@@ -133,7 +138,7 @@ class WebDriver_WebElement {
     try {
       $this->get_next_element($locator);
       $is_element_present = true;
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       $is_element_present = false;
     }
     return $is_element_present;

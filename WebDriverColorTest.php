@@ -1,6 +1,6 @@
 <?php
 
-require_once 'WebDriver.php';
+require_once 'WebDriver/WebDriver.php';
 
 class WebDriverColorTest extends PHPUnit_Framework_TestCase {
   public function valid_colors() {

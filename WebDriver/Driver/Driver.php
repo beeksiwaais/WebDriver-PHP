@@ -1,6 +1,11 @@
 <?php
 
-class WebDriver_Driver {
+namespace BeeksiWaais\WebDriver\Driver;
+
+use BeeksiWaais\WebDriver\WebDriver;
+use BeeksiWaais\WebDriver\Element\WebElement;
+
+class Driver {
   protected $session_id;
   protected $server_url;
   protected $browser;
@@ -63,7 +68,7 @@ class WebDriver_Driver {
     if ($version) {
       $capabilities["version"] = $version;
     }
-    return new WebDriver_Driver("http://" . $sauce_username . ":" . $sauce_key . "@ondemand.saucelabs.com:80/wd/hub", $capabilities);
+    return new Driver("http://" . $sauce_username . ":" . $sauce_key . "@ondemand.saucelabs.com:80/wd/hub", $capabilities);
   }
   
   public static function InitAtHost($host, $port, $browser, $additional_options = array()) {
@@ -72,9 +77,9 @@ class WebDriver_Driver {
       'browserName' => $browser,
     ), $additional_options);
     if (strcasecmp($browser, "iphone") == 0 || strcasecmp($browser, "android") == 0) {
-      return new WebDriver_Driver("http://$host:$port/hub", $capabilities);
+      return new Driver("http://$host:$port/hub", $capabilities);
     } else {
-      return new WebDriver_Driver("http://$host:$port/wd/hub", $capabilities);
+      return new Driver("http://$host:$port/wd/hub", $capabilities);
     }
   }
   
@@ -198,7 +203,7 @@ class WebDriver_Driver {
     $payload = WebDriver::ParseLocator($locator);
     $response = $this->execute("POST", "/session/:sessionId/element", $payload);
     $element_id = WebDriver::GetJSONValue($response, "ELEMENT");
-    return new WebDriver_WebElement($this, $element_id, $locator);
+    return new WebElement($this, $element_id, $locator);
   }
   
   // WebDriver can do implicit waits for AJAX elements, but sometimes you need explicit reloads
@@ -219,7 +224,7 @@ class WebDriver_Driver {
     $element_ids = WebDriver::GetJSONValue($response, "ELEMENT");
     $elements = array();
     foreach ($element_ids as $element_id) {
-      $elements[] = new WebDriver_WebElement($this, $element_id, $locator);
+      $elements[] = new WebElement($this, $element_id, $locator);
     }
     return $elements;
   }
@@ -228,7 +233,7 @@ class WebDriver_Driver {
   public function get_active_element() {
     $response = $this->execute("POST", "/session/:sessionId/element/active");
     $element_id = WebDriver::GetJSONValue($response, "ELEMENT");
-    return new WebDriver_WebElement($this, $element_id, "active=true");
+    return new WebElement($this, $element_id, "active=true");
   }
   
   public function is_element_present($locator) {
@@ -236,7 +241,7 @@ class WebDriver_Driver {
       $element = $this->get_element($locator);
       $element->describe(); // Under certain conditions get_element returns cached information. This tests if the element is actually there.
       $is_element_present = true;
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       $is_element_present = false;
     }
     return $is_element_present;
