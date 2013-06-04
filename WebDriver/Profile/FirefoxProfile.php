@@ -12,7 +12,7 @@ class FirefoxProfile {
   public function get_profile() {
     $tmp_filename = tempnam(sys_get_temp_dir(), "webdriver_firefox_profile_");
     
-    $zip = new ZipArchive();
+    $zip = new \ZipArchive();
     $zip->open($tmp_filename, ZIPARCHIVE::CREATE);
     $zip->addFromString("prefs.js", $this->get_preferences_file());
     $zip->close();
