@@ -266,7 +266,7 @@ class WebElement {
     do {
       $visible = $this->is_visible();
     } while (time() < $end_time && !$visible);
-    PHPUnit_Framework_Assert::assertTrue($visible, "Failed asserting that <{$this->locator}> is visible.");
+    \PHPUnit_Framework_Assert::assertTrue($visible, "Failed asserting that <{$this->locator}> is visible.");
   }
   
   public function assert_hidden() {
@@ -274,36 +274,36 @@ class WebElement {
     do {
       $hidden = !$this->is_visible();
     } while (time() < $end_time && !$hidden);
-    PHPUnit_Framework_Assert::assertTrue($hidden, "Failed asserting that <{$this->locator}> is hidden.");
+    \PHPUnit_Framework_Assert::assertTrue($hidden, "Failed asserting that <{$this->locator}> is hidden.");
   }
 
   public function assert_enabled() {
-    PHPUnit_Framework_Assert::assertTrue($this->is_enabled(), "Failed asserting that <{$this->locator}> is enabled.");
+    \PHPUnit_Framework_Assert::assertTrue($this->is_enabled(), "Failed asserting that <{$this->locator}> is enabled.");
   }
   
   public function assert_disabled() {
-    PHPUnit_Framework_Assert::assertFalse($this->is_enabled(), "Failed asserting that <{$this->locator}> is disabled.");
+    \PHPUnit_Framework_Assert::assertFalse($this->is_enabled(), "Failed asserting that <{$this->locator}> is disabled.");
   }
   
   public function assert_selected() {
-    PHPUnit_Framework_Assert::assertTrue($this->is_selected(), "Failed asserting that <{$this->locator}> is selected.");
+    \PHPUnit_Framework_Assert::assertTrue($this->is_selected(), "Failed asserting that <{$this->locator}> is selected.");
   }
   
   public function assert_not_selected() {
-    PHPUnit_Framework_Assert::assertFalse($this->is_selected(), "Failed asserting that <{$this->locator}> is not selected.");
+    \PHPUnit_Framework_Assert::assertFalse($this->is_selected(), "Failed asserting that <{$this->locator}> is not selected.");
   }
   
   public function assert_contains_element($child_locator) {
-    PHPUnit_Framework_Assert::assertTrue($this->contains_element($child_locator), "Failed asserting that <{$this->locator}> contains <$child_locator>.");
+    \PHPUnit_Framework_Assert::assertTrue($this->contains_element($child_locator), "Failed asserting that <{$this->locator}> contains <$child_locator>.");
   }
   
   public function assert_does_not_contain_element($child_locator) {
-    PHPUnit_Framework_Assert::assertFalse($this->contains_element($child_locator), "Failed asserting that <{$this->locator}> does not contain <$child_locator>.");
+    \PHPUnit_Framework_Assert::assertFalse($this->contains_element($child_locator), "Failed asserting that <{$this->locator}> does not contain <$child_locator>.");
   }
   
   public function assert_next_element_count($expected_count, $locator) {
     $actual_next_elements = $this->get_all_next_elements($locator);
-    PHPUnit_Framework_Assert::assertEquals($expected_count, count($actual_next_elements), "Failed asserting that <{$this->locator}> is followed by <$expected_count> instances of <$locator>");
+    \PHPUnit_Framework_Assert::assertEquals($expected_count, count($actual_next_elements), "Failed asserting that <{$this->locator}> is followed by <$expected_count> instances of <$locator>");
   }
   
   public function assert_text($expected_text) {
@@ -311,7 +311,7 @@ class WebElement {
     do {
       $actual_text = $this->get_text();
     } while (time() < $end_time && $actual_text != $expected_text);
-    PHPUnit_Framework_Assert::assertEquals($expected_text, $actual_text, "Failed asserting that <{$this->locator}>'s text is <$expected_text>.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_text, $actual_text, "Failed asserting that <{$this->locator}>'s text is <$expected_text>.");
   }
   
   // Reload the page until this element's text matches what's expected
@@ -322,27 +322,27 @@ class WebElement {
       $element_in_new_dom = $this->driver->get_element($this->locator);
       $actual_text = $element_in_new_dom->get_text();
     } while (time() < $end_time && $actual_text != $expected_text);
-    PHPUnit_Framework_Assert::assertEquals($expected_text, $actual_text, "Failed asserting that <{$this->locator}>'s text is <$expected_text> after " . WebDriver::$ImplicitWaitMS/1000 . " seconds.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_text, $actual_text, "Failed asserting that <{$this->locator}>'s text is <$expected_text> after " . WebDriver::$ImplicitWaitMS/1000 . " seconds.");
   }
   
   public function assert_text_contains($expected_needle) {
     $actual_haystack = $this->get_text();
-    PHPUnit_Framework_Assert::assertContains($expected_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s text contains <$expected_needle>.\n$actual_haystack");
+    \PHPUnit_Framework_Assert::assertContains($expected_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s text contains <$expected_needle>.\n$actual_haystack");
   }
 
   public function assert_text_does_not_contain($expected_missing_needle) {
     $actual_haystack = $this->get_text();
-    PHPUnit_Framework_Assert::assertNotContains($expected_missing_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s text does not contain <$expected_missing_needle>.");
+    \PHPUnit_Framework_Assert::assertNotContains($expected_missing_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s text does not contain <$expected_missing_needle>.");
   }
 
   public function assert_value($expected_value) {
     $actual_value = $this->get_value();
-    PHPUnit_Framework_Assert::assertEquals($expected_value, $actual_value, "Failed asserting that <{$this->locator}>'s value is <$expected_value>.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_value, $actual_value, "Failed asserting that <{$this->locator}>'s value is <$expected_value>.");
   }
   
   public function assert_attribute_value($attribute_name, $expected_value) {
     $actual_value = $this->get_attribute_value($attribute_name);
-    PHPUnit_Framework_Assert::assertEquals($expected_value, $actual_value, "Failed asserting that <{$this->locator}>'s attribute <{$attribute_name}> is <$expected_value>.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_value, $actual_value, "Failed asserting that <{$this->locator}>'s attribute <{$attribute_name}> is <$expected_value>.");
   }
   
   public function assert_attribute_contains($attribute_name, $expected_needle) {
@@ -350,7 +350,7 @@ class WebElement {
     do {
       $actual_haystack = $this->get_attribute_value($attribute_name);
     } while (time() < $end_time && strstr($actual_haystack, $expected_needle) === false);
-    PHPUnit_Framework_Assert::assertContains($expected_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s attribute <{$attribute_name}> contains <{$expected_needle}>.");
+    \PHPUnit_Framework_Assert::assertContains($expected_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s attribute <{$attribute_name}> contains <{$expected_needle}>.");
   }
   
   public function assert_attribute_does_not_contain($attribute_name, $expected_missing_needle) {
@@ -358,7 +358,7 @@ class WebElement {
     do {
       $actual_haystack = $this->get_attribute_value($attribute_name);
     } while (time() < $end_time && strstr($actual_haystack, $expected_missing_needle) !== false);
-    PHPUnit_Framework_Assert::assertNotContains($expected_missing_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s attribute <{$attribute_name}> does not contains <{$expected_needle}>.");
+    \PHPUnit_Framework_Assert::assertNotContains($expected_missing_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s attribute <{$attribute_name}> does not contains <{$expected_needle}>.");
   }
   
   // Will pass for "equivalent" CSS colors such as "#FFFFFF" and "white". Pass $canonicalize_colors = false to disable.
@@ -367,15 +367,15 @@ class WebElement {
     if (strpos($property_name, 'color') !== false && $canonicalize_colors) {
       $canonical_expected = WebDriver::CanonicalizeCSSColor($expected_value);
       $canonical_actual = WebDriver::CanonicalizeCSSColor($actual_value);
-      PHPUnit_Framework_Assert::assertEquals($canonical_expected, $canonical_actual, "Failed asserting that <{$this->locator}>'s <{$property_name}> is <$canonical_expected> after canonicalization.\nExpected: $expected_value -> $canonical_expected\nActual: $actual_value -> $canonical_actual");
+      \PHPUnit_Framework_Assert::assertEquals($canonical_expected, $canonical_actual, "Failed asserting that <{$this->locator}>'s <{$property_name}> is <$canonical_expected> after canonicalization.\nExpected: $expected_value -> $canonical_expected\nActual: $actual_value -> $canonical_actual");
     } else {
-      PHPUnit_Framework_Assert::assertEquals($expected_value, $actual_value, "Failed asserting that <{$this->locator}>'s <{$property_name}> is <$expected_value>.");
+      \PHPUnit_Framework_Assert::assertEquals($expected_value, $actual_value, "Failed asserting that <{$this->locator}>'s <{$property_name}> is <$expected_value>.");
     }
   }
   
   public function assert_css_value_contains($property_name, $expected_needle) {
     $actual_haystack = $this->get_css_value($property_name);
-    PHPUnit_Framework_Assert::assertContains($expected_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s <{$property_name}> contains <$expected_needle>.\n$actual_haystack");
+    \PHPUnit_Framework_Assert::assertContains($expected_needle, $actual_haystack, "Failed asserting that <{$this->locator}>'s <{$property_name}> contains <$expected_needle>.\n$actual_haystack");
   }
   
   /********************************************************************
@@ -384,12 +384,12 @@ class WebElement {
   
   public function assert_option_count($expected_count) {
     $options = $this->get_options();
-    PHPUnit_Framework_Assert::assertEquals($expected_count, count($options), "Failed asserting that <{$this->locator}> contains $expected_count options.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_count, count($options), "Failed asserting that <{$this->locator}> contains $expected_count options.");
   }
   
   public function assert_selected_count($expected_count) {
     $selected = $this->get_all_selected();
-    PHPUnit_Framework_Assert::assertEquals($expected_count, count($selected), "Failed asserting that <{$this->locator}> contains $expected_count selected options.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_count, count($selected), "Failed asserting that <{$this->locator}> contains $expected_count selected options.");
   }
   
   public function assert_contains_label($expected_label) {
@@ -404,6 +404,6 @@ class WebElement {
       }
       $labels[] = $actual_label;
     }
-    PHPUnit_Framework_Assert::assertTrue($contains_label, "Failed asserting that <{$this->locator}> contains label <$expected_label>.\n" . print_r($labels, true));
+    \PHPUnit_Framework_Assert::assertTrue($contains_label, "Failed asserting that <{$this->locator}> contains label <$expected_label>.\n" . print_r($labels, true));
   }
 }

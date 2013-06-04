@@ -95,7 +95,7 @@ class WebDriver {
     WebDriver::LogDebug($full_response);
     WebDriver::LogDebug("=====");
     $error = curl_error($curl);
-    PHPUnit_Framework_Assert::assertEquals("", $error, "Curl error: $error\nMethod: $http_type\nURL: $full_url\n" . print_r($payload, true));
+    \PHPUnit_Framework_Assert::assertEquals("", $error, "Curl error: $error\nMethod: $http_type\nURL: $full_url\n" . print_r($payload, true));
     curl_close($curl);
     $response_parts = explode("\r\n\r\n", $full_response, 2);
     $response['header'] = $response_parts[0];
@@ -194,15 +194,15 @@ class WebDriver {
       // white -> FFFFFF
       $six_hex = $css_colors[$color];
     }
-    PHPUnit_Framework_Assert::assertNotNull($six_hex, "Cannont canonicalize $color");
+    \PHPUnit_Framework_Assert::assertNotNull($six_hex, "Cannont canonicalize $color");
     return strtoupper($six_hex);
   }
 
   public static function GetJSONValue($curl_response, $attribute = null) {
-    PHPUnit_Framework_Assert::assertArrayHasKey('body', $curl_response, "Response had no body\n{$curl_response['header']}");
+    \PHPUnit_Framework_Assert::assertArrayHasKey('body', $curl_response, "Response had no body\n{$curl_response['header']}");
     $array = json_decode(trim($curl_response['body']), true);
-    PHPUnit_Framework_Assert::assertNotNull($array, "Body could not be decoded as JSON\n{$curl_response['body']}");
-    PHPUnit_Framework_Assert::assertArrayHasKey('value', $array, "JSON had no value\n" . print_r($array, true));
+    \PHPUnit_Framework_Assert::assertNotNull($array, "Body could not be decoded as JSON\n{$curl_response['body']}");
+    \PHPUnit_Framework_Assert::assertArrayHasKey('value', $array, "JSON had no value\n" . print_r($array, true));
     if ($attribute === null) {
       $rv = $array["value"];
     } else {
@@ -211,11 +211,11 @@ class WebDriver {
       } else if (is_array($array["value"])) {
         $rv = array();
         foreach ($array["value"] as $a_value) {
-          PHPUnit_Framework_Assert::assertArrayHasKey($attribute, $a_value, "JSON value did not have attribute $attribute\n" . print_r($array, true));
+          \PHPUnit_Framework_Assert::assertArrayHasKey($attribute, $a_value, "JSON value did not have attribute $attribute\n" . print_r($array, true));
           $rv[] = $a_value[$attribute];
         }
       }
-      PHPUnit_Framework_Assert::assertNotNull($rv, "JSON value did not have attribute $attribute\n" . print_r($array["value"], true));
+      \PHPUnit_Framework_Assert::assertNotNull($rv, "JSON value did not have attribute $attribute\n" . print_r($array["value"], true));
     }
     return $rv;
   }

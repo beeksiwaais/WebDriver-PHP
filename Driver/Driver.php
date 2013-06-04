@@ -55,7 +55,7 @@ class Driver {
     } else {
       $additional_info = "No response from server.";
     }
-    PHPUnit_Framework_Assert::assertEquals(2, count($matches), "Did not get a session id from $server_url\n$additional_info");
+    \PHPUnit_Framework_Assert::assertEquals(2, count($matches), "Did not get a session id from $server_url\n$additional_info");
     $this->session_id = trim($matches[1]);
   }
   
@@ -117,10 +117,10 @@ class Driver {
     $array = json_decode(trim($body), true);
     if (!is_null($array)) {
       $response_status_code = $array["status"];
-      PHPUnit_Framework_Assert::assertArrayHasKey($response_status_code, self::$status_codes, "Unknown status code $response_status_code returned from server.\n$body");
+      \PHPUnit_Framework_Assert::assertArrayHasKey($response_status_code, self::$status_codes, "Unknown status code $response_status_code returned from server.\n$body");
       $response_info = $response_status_code . " - " . self::$status_codes[$response_status_code][0] . " - " . self::$status_codes[$response_status_code][1];
       $additional_info = isset($array['value']['message']) ? "Message: " . $array['value']['message'] : "Response: " . $body;
-      PHPUnit_Framework_Assert::assertEquals(0, $response_status_code, "Unsuccessful WebDriver command: $response_info\nCommand: $command_info\n$additional_info");
+      \PHPUnit_Framework_Assert::assertEquals(0, $response_status_code, "Unsuccessful WebDriver command: $response_info\nCommand: $command_info\n$additional_info");
     }
   }
   
@@ -343,7 +343,7 @@ class Driver {
   // See http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/timeouts
   public function set_timeout($timeout_type, $milliseconds) {
     $acceptable_timeout_types = array("script", "implicit", "page load");
-    PHPUnit_Framework_Assert::assertTrue(in_array($timeout_type, $acceptable_timeout_types), "First argument must be one of: " . implode(", ", $acceptable_timeout_types));
+    \PHPUnit_Framework_Assert::assertTrue(in_array($timeout_type, $acceptable_timeout_types), "First argument must be one of: " . implode(", ", $acceptable_timeout_types));
     $payload = array("type" => $timeout_type, "ms" => $milliseconds);
     $this->execute("POST", "/session/:sessionId/timeouts", $payload);
   }
@@ -403,7 +403,7 @@ class Driver {
         }
       }
     } while (time() < $end_time && !$found_window);
-    PHPUnit_Framework_Assert::assertTrue($found_window, "Could not find window with title <$window_title> and optional hash <$ie_hash>. Found " . count($all_titles) . " windows: " . implode("; ", $all_titles));
+    \PHPUnit_Framework_Assert::assertTrue($found_window, "Could not find window with title <$window_title> and optional hash <$ie_hash>. Found " . count($all_titles) . " windows: " . implode("; ", $all_titles));
   }
   
   // See http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/window
@@ -755,7 +755,7 @@ class Driver {
    */
 
   public function assert_url($expected_url) {
-    PHPUnit_Framework_Assert::assertEquals($expected_url, $this->get_url(), "Failed asserting that URL is <$expected_url>.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_url, $this->get_url(), "Failed asserting that URL is <$expected_url>.");
   }
   
   // IE appends the anchor tag to the window title, but only when it's done loading
@@ -769,15 +769,15 @@ class Driver {
       $actual_title = $this->get_title();
       $title_matched = ($this->browser == 'internet explorer' && $actual_title == $expected_title . $ie_hash) || ($actual_title == $expected_title);
     } while (time() < $end_time && !$title_matched);
-    PHPUnit_Framework_Assert::assertTrue($title_matched, "Failed asserting that <$actual_title> is <$expected_title> with optional hash <$ie_hash>.");
+    \PHPUnit_Framework_Assert::assertTrue($title_matched, "Failed asserting that <$actual_title> is <$expected_title> with optional hash <$ie_hash>.");
   }
   
   public function assert_element_present($element_locator) {
-    PHPUnit_Framework_Assert::assertTrue($this->is_element_present($element_locator), "Failed asserting that <$element_locator> is present");
+    \PHPUnit_Framework_Assert::assertTrue($this->is_element_present($element_locator), "Failed asserting that <$element_locator> is present");
   }
   
   public function assert_element_not_present($element_locator) {
-    PHPUnit_Framework_Assert::assertFalse($this->is_element_present($element_locator), "Failed asserting that <$element_locator> is not present");
+    \PHPUnit_Framework_Assert::assertFalse($this->is_element_present($element_locator), "Failed asserting that <$element_locator> is not present");
   }
   
   public function assert_element_count($locator, $expected_count) {
@@ -786,21 +786,21 @@ class Driver {
     do {
       $actual_count = count($this->get_all_elements($locator));
     } while (time() < $end_time && $actual_count != $expected_count);
-    PHPUnit_Framework_Assert::assertEquals($expected_count, $actual_count, "Failed asserting that <$locator> appears $expected_count times.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_count, $actual_count, "Failed asserting that <$locator> appears $expected_count times.");
   }
   
   public function assert_string_present($expected_string) {
     $page_text = $this->get_text();
-    PHPUnit_Framework_Assert::assertContains($expected_string, $page_text, "Failed asserting that page text contains <$expected_string>.\n$page_text");
+    \PHPUnit_Framework_Assert::assertContains($expected_string, $page_text, "Failed asserting that page text contains <$expected_string>.\n$page_text");
   }
   
   public function assert_string_not_present($expected_missing_string) {
     $page_text = $this->get_text();
-    PHPUnit_Framework_Assert::assertNotContains($expected_missing_string, $page_text, "Failed asserting that page text does not contain <$expected_missing_string>.\n$page_text");
+    \PHPUnit_Framework_Assert::assertNotContains($expected_missing_string, $page_text, "Failed asserting that page text does not contain <$expected_missing_string>.\n$page_text");
   }
   
   public function assert_alert_text($expected_text) {
     $actual_text = $this->get_alert_text();
-    PHPUnit_Framework_Assert::assertEquals($expected_text, $actual_text, "Failed asserting that alert text is <$expected_text>.");
+    \PHPUnit_Framework_Assert::assertEquals($expected_text, $actual_text, "Failed asserting that alert text is <$expected_text>.");
   }
 }
